@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       /* Set the size of the div element that contains the map */
+       @import url('https://www.fontify.me/wf/7116669ff62ea6ce905b50766eaca6b8');
+
+      #map {
+        height: 700px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
+       h3 {
+           text-align: center;
+           font-family: font92731;
+       }
+       
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="./output.json" ></script>
+  </head>
+  <body>
+    <h3>Servicable (Version: 2.0)</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <script>
+// Initialize and add the map
+
+function initMap() {
+  // The location of Uluru
+  var pc = {lat: 26.872828, lng: 75.801798};
+  //var point1 = {lat: 26.8773325045045, lng: 75.801798}
+  //var point2 = {lat: 26.872828, lng: 75.80629036298293}
+  //var point3 = {lat: 26.868323495495495, lng: 75.801798}
+  //var point4 = {lat: 26.872828, lng: 75.79730563701708}
+  //var point5 = {lat: 26.87601316568102, lng: 75.80497458032879}
+  // The map, centered at Uluru
+  
+
+
+  var green = "http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png";
+  var red = "http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png";
+
+
+  var greenicon = {
+    url: green, // url
+    scaledSize: new google.maps.Size(50, 50), // scaled size
+    origin: new google.maps.Point(0,0), // origin
+    anchor: new google.maps.Point(0, 0) // anchor
+};
+
+var redicon = {
+    url: red, // url
+    scaledSize: new google.maps.Size(50, 50), // scaled size
+    origin: new google.maps.Point(0,0), // origin
+    anchor: new google.maps.Point(0, 0) // anchor
+};
+
+
+
+
+
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 15, center: pc});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: pc, map: map});
+  //var marker = new google.maps.Marker({position: point1, map: map, animation: google.maps.Animation.BOUNCE});
+  //var marker = new google.maps.Marker({position: point2, map: map});
+  //var marker = new google.maps.Marker({position: point3, map: map});
+  //var marker = new google.maps.Marker({position: point4, map: map});
+  //var marker = new google.maps.Marker({position: point5, map: map});
+
+  console.log(json_data);
+  for (index = 0; index < json_data["serviceable"].length; index++) { 
+    var marker = new google.maps.Marker({position: json_data["serviceable"][index], map: map, icon: greenicon});
+} 
+
+for (index = 0; index < json_data["unserviceable"].length; index++) { 
+    var marker = new google.maps.Marker({position: json_data["unserviceable"][index], map: map, icon: redicon, animation: google.maps.Animation.BOUNCE });
+} 
+
+
+    
+
+
+
+
+}
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOURAPIKEY&callback=initMap">
+    </script>
+  </body>
+</html>
